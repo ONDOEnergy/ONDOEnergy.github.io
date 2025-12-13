@@ -1,0 +1,277 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:09.870420Z",
+  "request_id": "req_153909",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "pay-202512-024",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-12-05",
+        "date_bank": "2025-12-06",
+        "amount": 3581.15,
+        "currency": "UAH",
+        "method": "bank_transfer",
+        "channel": "bank",
+        "bank_name": "АТ «ПУМБ»",
+        "purpose": "За електроенергію, рахунок 2025-12-INV-001",
+        "status": "processed",
+        "created_at": "2025-12-05T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202511-023",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-11-05",
+        "date_bank": "2025-11-06",
+        "amount": 2370.98,
+        "currency": "UAH",
+        "method": "card",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «Ощадбанк»",
+        "purpose": "За електроенергію, рахунок 2025-11-INV-001",
+        "status": "processed",
+        "created_at": "2025-11-05T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202510-022",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-10-06",
+        "date_bank": "2025-10-07",
+        "amount": 3132.78,
+        "currency": "UAH",
+        "method": "card",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «ПриватБанк»",
+        "purpose": "За електроенергію, рахунок 2025-10-INV-001",
+        "status": "processed",
+        "created_at": "2025-10-06T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202509-021",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-09-06",
+        "date_bank": "2025-09-07",
+        "amount": 3928.01,
+        "currency": "UAH",
+        "method": "cash",
+        "channel": "personal_account",
+        "bank_name": "АТ «Ощадбанк»",
+        "purpose": "За електроенергію, рахунок 2025-09-INV-001",
+        "status": "processed",
+        "created_at": "2025-09-06T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202508-020",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-08-07",
+        "date_bank": "2025-08-08",
+        "amount": 3705.78,
+        "currency": "UAH",
+        "method": "bank_transfer",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «ПУМБ»",
+        "purpose": "За електроенергію, рахунок 2025-08-INV-001",
+        "status": "processed",
+        "created_at": "2025-08-07T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202507-019",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-07-08",
+        "date_bank": "2025-07-09",
+        "amount": 1747.06,
+        "currency": "UAH",
+        "method": "bank_transfer",
+        "channel": "personal_account",
+        "bank_name": "АТ «ПриватБанк»",
+        "purpose": "За електроенергію, рахунок 2025-07-INV-001",
+        "status": "processed",
+        "created_at": "2025-07-08T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202506-018",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-06-08",
+        "date_bank": "2025-06-09",
+        "amount": 3753.43,
+        "currency": "UAH",
+        "method": "card",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «ПУМБ»",
+        "purpose": "За електроенергію, рахунок 2025-06-INV-001",
+        "status": "processed",
+        "created_at": "2025-06-08T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202505-017",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-05-09",
+        "date_bank": "2025-05-10",
+        "amount": 1606.98,
+        "currency": "UAH",
+        "method": "card",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «ПриватБанк»",
+        "purpose": "За електроенергію, рахунок 2025-05-INV-001",
+        "status": "processed",
+        "created_at": "2025-05-09T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202504-016",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-04-09",
+        "date_bank": "2025-04-10",
+        "amount": 2299.81,
+        "currency": "UAH",
+        "method": "bank_transfer",
+        "channel": "payment_terminal",
+        "bank_name": "АТ «ПриватБанк»",
+        "purpose": "За електроенергію, рахунок 2025-04-INV-001",
+        "status": "processed",
+        "created_at": "2025-04-09T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    },
+    {
+      "id": "pay-202503-015",
+      "type": "payment",
+      "attributes": {
+        "date_client": "2025-03-10",
+        "date_bank": "2025-03-11",
+        "amount": 2149.12,
+        "currency": "UAH",
+        "method": "cash",
+        "channel": "personal_account",
+        "bank_name": "АТ «ПУМБ»",
+        "purpose": "За електроенергію, рахунок 2025-03-INV-001",
+        "status": "processed",
+        "created_at": "2025-03-10T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 10,
+    "total_items": 24,
+    "total_pages": 3,
+    "has_next": true,
+    "has_prev": false,
+    "summary": {
+      "total_amount": 68972.86,
+      "count": 24,
+      "currency": "UAH"
+    },
+    "filters_applied": {
+      "status": null,
+      "date_from": null,
+      "date_to": null
+    },
+    "sort": {
+      "field": "date_client",
+      "order": "desc"
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/payments?page=1&per_page=10",
+    "first": "/api/v1/account/01001-00557289/payments?page=1&per_page=10",
+    "last": "/api/v1/account/01001-00557289/payments?page=3&per_page=10",
+    "next": "/api/v1/account/01001-00557289/payments?page=2&per_page=10"
+  }
+}

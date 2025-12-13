@@ -1,0 +1,45 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:00:43.289136Z",
+  "request_id": "req_366214",
+  "api_version": "v1",
+  "data": {
+    "id": 1,
+    "type": "user",
+    "attributes": {
+      "username": "demo_user",
+      "email": "demo.user@example.com",
+      "phone": "+380671234567",
+      "locale": "uk",
+      "created_at": "2024-01-15T10:15:00Z",
+      "updated_at": "2025-12-09T18:30:00Z"
+    },
+    "preferences": {
+      "newsletter_enabled": false,
+      "timezone": "Europe/Kyiv",
+      "currency": "UAH",
+      "date_format": "DD.MM.YYYY",
+      "theme": "light"
+    },
+    "relationships": {
+      "accounts": {
+        "data": [
+          {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        ],
+        "links": {
+          "related": "/api/v1/user/1/accounts"
+        }
+      }
+    }
+  },
+  "links": {
+    "self": "/api/v1/user/1",
+    "accounts": "/api/v1/user/1/accounts",
+    "settings": "/api/v1/user/1/settings",
+    "messages": "/api/v1/user/1/messages"
+  }
+}

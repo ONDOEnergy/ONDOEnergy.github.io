@@ -1,0 +1,26 @@
+{
+  "status": "error",
+  "code": 422,
+  "timestamp": "2025-12-10T12:02:39.531410Z",
+  "request_id": "req_349508",
+  "api_version": "v1",
+  "error": {
+    "code": 422,
+    "message": "Validation failed",
+    "details": {
+      "message": "The request contains invalid data",
+      "validation_errors": [
+        {
+          "field": "email",
+          "code": "invalid_format",
+          "message": "Invalid email format"
+        },
+        {
+          "field": "amount",
+          "code": "out_of_range",
+          "message": "Amount must be between 1 and 50000 UAH"
+        }
+      ]
+    }
+  }
+}

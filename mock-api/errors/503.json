@@ -1,0 +1,16 @@
+{
+  "status": "error",
+  "code": 503,
+  "timestamp": "2025-12-10T12:02:39.533187Z",
+  "request_id": "req_622165",
+  "api_version": "v1",
+  "error": {
+    "code": 503,
+    "message": "Service temporarily unavailable",
+    "details": {
+      "message": "The service is currently undergoing maintenance",
+      "estimated_recovery": "2025-12-10T14:00:00Z",
+      "status_page": "https://status.utility-company.ua"
+    }
+  }
+}

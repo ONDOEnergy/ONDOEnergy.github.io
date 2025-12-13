@@ -1,0 +1,92 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:03:14.278427Z",
+  "request_id": "req_138986",
+  "api_version": "v1",
+  "data": {
+    "id": "2024",
+    "type": "energy_mix",
+    "attributes": {
+      "year": 2024,
+      "unit": "kWh",
+      "sources": [
+        {
+          "code": "coal",
+          "name": "вугілля",
+          "category": "carbon",
+          "volume": 327432415,
+          "share_percent": 8.48
+        },
+        {
+          "code": "natural_gas",
+          "name": "природний газ",
+          "category": "carbon",
+          "volume": 9946250,
+          "share_percent": 0.26
+        },
+        {
+          "code": "fuel_oil",
+          "name": "мазут",
+          "category": "carbon",
+          "volume": 1180357,
+          "share_percent": 0.03
+        },
+        {
+          "code": "nuclear",
+          "name": "ядерне паливо",
+          "category": "non_carbon",
+          "volume": 2464874178,
+          "share_percent": 63.8
+        },
+        {
+          "code": "renewables",
+          "name": "відновлювальні джерела енергії",
+          "category": "renewable",
+          "volume": 140413902,
+          "share_percent": 3.63
+        },
+        {
+          "code": "other",
+          "name": "Інші джерела",
+          "category": "non_carbon",
+          "volume": 919560693,
+          "share_percent": 23.8
+        }
+      ],
+      "total_volume": 3863407794,
+      "guarantees_of_origin": {
+        "volume": 101000,
+        "share_percent": 0.003
+      },
+      "regulation": {
+        "resolution_number": "№ 2626",
+        "resolution_date": "2023-12-27",
+        "authority": "НКРЕКП"
+      }
+    }
+  },
+  "meta": {
+    "year": 2024,
+    "published_date": "2025-01-31",
+    "external_links": [
+      {
+        "name": "NECU",
+        "url": "https://necu.org.ua"
+      },
+      {
+        "name": "Ministry of Environment",
+        "url": "https://mepr.gov.ua"
+      },
+      {
+        "name": "Energoatom",
+        "url": "https://atom.org.ua"
+      }
+    ]
+  },
+  "links": {
+    "self": "/api/v1/company/key-info/2024",
+    "prev_year": "/api/v1/company/key-info/2023",
+    "company": "/api/v1/company"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:02:09.155826Z",
+  "request_id": "req_252117",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "reading-2025-12-01",
+      "type": "meter_reading",
+      "attributes": {
+        "date": "2025-12-01",
+        "value": 42130,
+        "unit": "kWh",
+        "source": "user",
+        "status": "accepted",
+        "created_at": "2025-12-01T08:30:00Z"
+      }
+    },
+    {
+      "id": "reading-2025-11-01",
+      "type": "meter_reading",
+      "attributes": {
+        "date": "2025-11-01",
+        "value": 41349,
+        "unit": "kWh",
+        "source": "user",
+        "status": "accepted",
+        "created_at": "2025-11-01T08:30:00Z"
+      }
+    },
+    {
+      "id": "reading-2025-10-01",
+      "type": "meter_reading",
+      "attributes": {
+        "date": "2025-10-01",
+        "value": 40461,
+        "unit": "kWh",
+        "source": "user",
+        "status": "accepted",
+        "created_at": "2025-10-01T08:30:00Z"
+      }
+    },
+    {
+      "id": "reading-2025-09-01",
+      "type": "meter_reading",
+      "attributes": {
+        "date": "2025-09-01",
+        "value": 39573,
+        "unit": "kWh",
+        "source": "user",
+        "status": "accepted",
+        "created_at": "2025-09-01T08:30:00Z"
+      }
+    },
+    {
+      "id": "reading-2025-08-01",
+      "type": "meter_reading",
+      "attributes": {
+        "date": "2025-08-01",
+        "value": 39573,
+        "unit": "kWh",
+        "source": "operator",
+        "status": "control",
+        "created_at": "2025-08-01T08:30:00Z"
+      }
+    }
+  ],
+  "meta": {
+    "unit": "kWh",
+    "last_submitted": {
+      "date": "2025-12-01",
+      "value": 42130,
+      "source": "user",
+      "status": "accepted"
+    },
+    "submission_rules": {
+      "allowed": false,
+      "reason": "submit_to_dso",
+      "message": "Показання необхідно передавати Оператору системи розподілу"
+    },
+    "operator_info": {
+      "id": "dso-odessa",
+      "name": "АТ «ОДЕСАОБЛЕНЕРГО»",
+      "website": "https://dtek-oem.com.ua",
+      "eic": "56X0000000000000"
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/readings",
+    "submit": "/api/v1/account/01001-00557289/readings",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}

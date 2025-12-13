@@ -1,0 +1,216 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:03:14.282139Z",
+  "request_id": "req_633124",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "2025-01",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 1,
+        "period_label": "Січень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-02",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 2,
+        "period_label": "Лютий 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-03",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 3,
+        "period_label": "Березень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-04",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 4,
+        "period_label": "Квітень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-05",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 5,
+        "period_label": "Травень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-06",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 6,
+        "period_label": "Червень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-07",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 7,
+        "period_label": "Липень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-08",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 8,
+        "period_label": "Серпень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-09",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 9,
+        "period_label": "Вересень 2025",
+        "volume": 472,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 2039.04,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-10",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 10,
+        "period_label": "Жовтень 2025",
+        "volume": 888,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 3836.16,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-11",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 11,
+        "period_label": "Листопад 2025",
+        "volume": 781,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 3373.92,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    },
+    {
+      "id": "2025-12",
+      "type": "accrual",
+      "attributes": {
+        "year": 2025,
+        "month": 12,
+        "period_label": "Грудень 2025",
+        "volume": 0,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "total": 0.0,
+        "currency": "UAH",
+        "tariff_category": "місто"
+      }
+    }
+  ],
+  "meta": {
+    "year": 2025,
+    "currency": "UAH",
+    "summary": {
+      "total_volume": 2141,
+      "total_amount": 9249.119999999999,
+      "average_monthly_volume": 178.42,
+      "average_monthly_cost": 770.76
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/accruals/2025",
+    "prev_year": "/api/v1/account/01001-00557289/accruals/2024",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}
