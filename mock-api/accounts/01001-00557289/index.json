@@ -1,0 +1,82 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:00:55.733026Z",
+  "request_id": "req_132809",
+  "api_version": "v1",
+  "data": {
+    "id": "01001-00557289",
+    "type": "account",
+    "attributes": {
+      "number": "01001/00557289",
+      "alias": "Квартира в Одесі",
+      "address": "м. Одеса, вул. Героїв-Миру, 2, кв. 44",
+      "status": "active",
+      "service_type": "electricity",
+      "created_at": "2020-05-01T09:00:00Z",
+      "updated_at": "2025-12-09T20:14:00Z",
+      "last_synced_at": "2025-12-09T20:14:00Z",
+      "owner_name": "Воля Володимир Олегович",
+      "eic": "63Z6327110312704",
+      "contract_number": "01001/00606389",
+      "contract_expires_at": "2025-12-31T23:59:59Z",
+      "contract_auto_renewal": true,
+      "distribution_operator": {
+        "name": "АТ \"ДТЕК Одеські Електромережі\"",
+        "code": "DTEK_ODESSA"
+      },
+      "disconnection_warning": {
+        "present": false,
+        "message": null
+      },
+      "disconnection_appeal": {
+        "present": false,
+        "message": null
+      }
+    },
+    "balance": {
+      "amount": 3373.92,
+      "currency": "UAH",
+      "as_of": "2025-12-09T20:14:00Z",
+      "type": "advance"
+    },
+    "relationships": {
+      "user": {
+        "data": {
+          "type": "user",
+          "id": 1
+        },
+        "links": {
+          "related": "/api/v1/user/1"
+        }
+      },
+      "supplier": {
+        "data": {
+          "type": "supplier",
+          "id": "ooek"
+        },
+        "links": {
+          "related": "/api/v1/supplier/ooek"
+        }
+      },
+      "tariff": {
+        "data": {
+          "type": "tariff",
+          "id": "tariff-city-2024-10"
+        },
+        "links": {
+          "related": "/api/v1/account/01001-00557289/tariffs/current"
+        }
+      }
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289",
+    "subscriber_book": "/api/v1/account/01001-00557289/subscriber-book",
+    "payments": "/api/v1/account/01001-00557289/payments",
+    "invoices": "/api/v1/account/01001-00557289/invoices",
+    "consumption": "/api/v1/account/01001-00557289/consumption",
+    "readings": "/api/v1/account/01001-00557289/readings",
+    "tariffs": "/api/v1/account/01001-00557289/tariffs"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "error",
+  "code": 500,
+  "timestamp": "2025-12-10T12:02:39.532501Z",
+  "request_id": "req_851877",
+  "api_version": "v1",
+  "error": {
+    "code": 500,
+    "message": "Internal server error",
+    "details": {
+      "message": "An unexpected error occurred while processing your request",
+      "error_id": "err_5f8c3a9b2d1e",
+      "support_contact": "support@utility-company.ua"
+    }
+  }
+}

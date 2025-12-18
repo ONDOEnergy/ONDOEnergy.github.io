@@ -1,0 +1,18 @@
+{
+  "status": "error",
+  "code": 429,
+  "timestamp": "2025-12-10T12:02:39.532047Z",
+  "request_id": "req_559427",
+  "api_version": "v1",
+  "error": {
+    "code": 429,
+    "message": "Too many requests",
+    "details": {
+      "message": "Rate limit exceeded. Please try again later",
+      "retry_after_seconds": 60,
+      "limit": 100,
+      "window": "1 minute",
+      "remaining": 0
+    }
+  }
+}

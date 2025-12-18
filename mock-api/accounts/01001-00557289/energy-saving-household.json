@@ -1,0 +1,97 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:23.184652Z",
+  "request_id": "req_880060",
+  "api_version": "v1",
+  "data": [
+    {
+      "month": 1,
+      "year": 2025,
+      "individual": 280,
+      "household": 320,
+      "both": 250
+    },
+    {
+      "month": 2,
+      "year": 2025,
+      "individual": 265,
+      "household": 310,
+      "both": 240
+    },
+    {
+      "month": 3,
+      "year": 2025,
+      "individual": 250,
+      "household": 295,
+      "both": 230
+    },
+    {
+      "month": 4,
+      "year": 2025,
+      "individual": 240,
+      "household": 285,
+      "both": 220
+    },
+    {
+      "month": 5,
+      "year": 2025,
+      "individual": 230,
+      "household": 275,
+      "both": 210
+    },
+    {
+      "month": 6,
+      "year": 2025,
+      "individual": 220,
+      "household": 265,
+      "both": 200
+    },
+    {
+      "month": 7,
+      "year": 2025,
+      "individual": 215,
+      "household": 260,
+      "both": 195
+    },
+    {
+      "month": 8,
+      "year": 2025,
+      "individual": 210,
+      "household": 255,
+      "both": 190
+    },
+    {
+      "month": 9,
+      "year": 2025,
+      "individual": 225,
+      "household": 270,
+      "both": 205
+    },
+    {
+      "month": 10,
+      "year": 2025,
+      "individual": 235,
+      "household": 280,
+      "both": 215
+    },
+    {
+      "month": 11,
+      "year": 2025,
+      "individual": 245,
+      "household": 290,
+      "both": 225
+    },
+    {
+      "month": 12,
+      "year": 2025,
+      "individual": 255,
+      "household": 300,
+      "both": 235
+    }
+  ],
+  "meta": {
+    "currency": "UAH",
+    "average_tariff_rate": 4.32
+  }
+}

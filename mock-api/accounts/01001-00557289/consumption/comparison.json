@@ -1,0 +1,169 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:39.199843Z",
+  "request_id": "req_672410",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "comp-jan",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 1,
+        "label": "January",
+        "current_year_value": 0,
+        "previous_year_value": 450,
+        "unit": "kWh",
+        "difference": -450,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-feb",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 2,
+        "label": "February",
+        "current_year_value": 0,
+        "previous_year_value": 420,
+        "unit": "kWh",
+        "difference": -420,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-mar",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 3,
+        "label": "March",
+        "current_year_value": 0,
+        "previous_year_value": 380,
+        "unit": "kWh",
+        "difference": -380,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-apr",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 4,
+        "label": "April",
+        "current_year_value": 0,
+        "previous_year_value": 320,
+        "unit": "kWh",
+        "difference": -320,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-may",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 5,
+        "label": "May",
+        "current_year_value": 0,
+        "previous_year_value": 280,
+        "unit": "kWh",
+        "difference": -280,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-jun",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 6,
+        "label": "June",
+        "current_year_value": 0,
+        "previous_year_value": 250,
+        "unit": "kWh",
+        "difference": -250,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-jul",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 7,
+        "label": "July",
+        "current_year_value": 0,
+        "previous_year_value": 300,
+        "unit": "kWh",
+        "difference": -300,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-aug",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 8,
+        "label": "August",
+        "current_year_value": 0,
+        "previous_year_value": 350,
+        "unit": "kWh",
+        "difference": -350,
+        "difference_percent": -100
+      }
+    },
+    {
+      "id": "comp-sep",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 9,
+        "label": "September",
+        "current_year_value": 472,
+        "previous_year_value": 380,
+        "unit": "kWh",
+        "difference": 92,
+        "difference_percent": 24.2
+      }
+    },
+    {
+      "id": "comp-oct",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 10,
+        "label": "October",
+        "current_year_value": 888,
+        "previous_year_value": 450,
+        "unit": "kWh",
+        "difference": 438,
+        "difference_percent": 97.3
+      }
+    },
+    {
+      "id": "comp-nov",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 11,
+        "label": "November",
+        "current_year_value": 781,
+        "previous_year_value": 520,
+        "unit": "kWh",
+        "difference": 261,
+        "difference_percent": 50.2
+      }
+    },
+    {
+      "id": "comp-dec",
+      "type": "consumption_comparison",
+      "attributes": {
+        "month": 12,
+        "label": "December",
+        "current_year_value": 0,
+        "previous_year_value": 600,
+        "unit": "kWh",
+        "difference": -600,
+        "difference_percent": -100
+      }
+    }
+  ],
+  "meta": {
+    "years": [2024, 2025],
+    "unit": "kWh"
+  }
+}

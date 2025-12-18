@@ -1,0 +1,57 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:02:51.411688Z",
+  "request_id": "req_112412",
+  "api_version": "v1",
+  "data": [
+    {
+      "type": "message",
+      "id": "101",
+      "attributes": {
+        "subject": "Підтвердження платежу",
+        "body": "Я здійснив платіж за рахунок минулого місяця. Будь ласка, підтвердіть отримання.",
+        "from": "user",
+        "to": "support",
+        "date": "2025-12-12T10:30:00Z",
+        "read": true,
+        "type": "outgoing"
+      }
+    },
+    {
+      "type": "message",
+      "id": "102",
+      "attributes": {
+        "subject": "Проблема з передачею показань",
+        "body": "Я не можу передати показання лічильника через портал. Система показує помилку про невалідне значення.",
+        "from": "user",
+        "to": "support",
+        "date": "2025-11-28T14:15:00Z",
+        "read": true,
+        "type": "outgoing"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 20,
+      "total_items": 2,
+      "total_pages": 1,
+      "has_next": false,
+      "has_prev": false
+    },
+    "folder": "sent",
+    "unread_count": 0,
+    "filters_applied": {
+      "read_status": null,
+      "date_from": null
+    }
+  },
+  "links": {
+    "self": "/api/v1/user/1/messages/outgoing",
+    "incoming": "/api/v1/user/1/messages/incoming",
+    "compose": "/api/v1/user/1/messages",
+    "user": "/api/v1/user/1"
+  }
+}

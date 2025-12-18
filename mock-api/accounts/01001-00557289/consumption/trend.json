@@ -1,0 +1,45 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:39.199843Z",
+  "request_id": "req_672411",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "trend-2023",
+      "type": "consumption_trend",
+      "attributes": {
+        "year": 2023,
+        "total_consumption": 4500,
+        "average_monthly": 375,
+        "unit": "kWh"
+      }
+    },
+    {
+      "id": "trend-2024",
+      "type": "consumption_trend",
+      "attributes": {
+        "year": 2024,
+        "total_consumption": 4700,
+        "average_monthly": 391.67,
+        "unit": "kWh"
+      }
+    },
+    {
+      "id": "trend-2025",
+      "type": "consumption_trend",
+      "attributes": {
+        "year": 2025,
+        "total_consumption": 2141,
+        "average_monthly": 178.42,
+        "unit": "kWh",
+        "projected_total": 5100,
+        "is_partial": true
+      }
+    }
+  ],
+  "meta": {
+    "trend_direction": "increasing",
+    "trend_percent": 8.5
+  }
+}

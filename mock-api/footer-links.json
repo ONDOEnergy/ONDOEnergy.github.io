@@ -1,0 +1,111 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "company": [
+      {
+        "id": "about",
+        "label": "about",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "careers",
+        "label": "careers",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "contact",
+        "label": "contact",
+        "href": "#",
+        "alert": null
+      }
+    ],
+    "product": [
+      {
+        "id": "features",
+        "label": "features",
+        "href": "#",
+        "alert": null
+      },
+      {
+        "id": "pricing",
+        "label": "pricing",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "security",
+        "label": "security",
+        "href": "#",
+        "alert": null
+      }
+    ],
+    "support": [
+      {
+        "id": "help",
+        "label": "help",
+        "href": "#",
+        "alert": null
+      },
+      {
+        "id": "legal",
+        "label": "legal",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "privacy",
+        "label": "privacy",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      }
+    ],
+    "legal": [
+      {
+        "id": "terms",
+        "label": "terms",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "privacy",
+        "label": "privacy",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      },
+      {
+        "id": "cookies",
+        "label": "cookies",
+        "href": "#",
+        "alert": {
+          "type": "coming_soon",
+          "message": "Coming Soon"
+        }
+      }
+    ]
+  }
+}
+

@@ -1,0 +1,64 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:39.203782Z",
+  "request_id": "req_545609",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "2023",
+      "type": "consumption_yearly",
+      "attributes": {
+        "year": 2023,
+        "total": 1980,
+        "average_monthly": 165,
+        "unit": "kWh"
+      },
+      "links": {
+        "details": "/api/v1/account/01001-00557289/consumption/2023"
+      }
+    },
+    {
+      "id": "2024",
+      "type": "consumption_yearly",
+      "attributes": {
+        "year": 2024,
+        "total": 2050,
+        "average_monthly": 170.83,
+        "unit": "kWh"
+      },
+      "links": {
+        "details": "/api/v1/account/01001-00557289/consumption/2024"
+      }
+    },
+    {
+      "id": "2025",
+      "type": "consumption_yearly",
+      "attributes": {
+        "year": 2025,
+        "total": 2141,
+        "average_monthly": 178.42,
+        "unit": "kWh"
+      },
+      "links": {
+        "details": "/api/v1/account/01001-00557289/consumption/2025"
+      }
+    }
+  ],
+  "meta": {
+    "unit": "kWh",
+    "years_available": [
+      2023,
+      2024,
+      2025
+    ],
+    "summary": {
+      "total_all_years": 6171,
+      "average_yearly": 2057.0
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/consumption/years",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:02:51.410201Z",
+  "request_id": "req_101784",
+  "api_version": "v1",
+  "data": {
+    "id": "1",
+    "type": "user_settings",
+    "attributes": {
+      "email": "demo.user@example.com",
+      "phone": "+380671234567",
+      "locale": "uk",
+      "timezone": "Europe/Kyiv",
+      "currency": "UAH",
+      "newsletter_enabled": false,
+      "theme": "light",
+      "date_format": "DD.MM.YYYY",
+      "notifications": {
+        "email": {
+          "invoices": true,
+          "payments": true,
+          "disconnection_warnings": true,
+          "newsletter": false
+        },
+        "push": {
+          "enabled": false
+        }
+      },
+      "updated_at": "2025-12-09T18:30:00Z"
+    },
+    "relationships": {
+      "user": {
+        "data": {
+          "type": "user",
+          "id": 1
+        },
+        "links": {
+          "related": "/api/v1/user/1"
+        }
+      }
+    }
+  },
+  "links": {
+    "self": "/api/v1/user/1/settings",
+    "user": "/api/v1/user/1",
+    "update": "/api/v1/user/1/settings"
+  }
+}

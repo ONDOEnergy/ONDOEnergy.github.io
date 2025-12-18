@@ -1,0 +1,85 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:02:22.646384Z",
+  "request_id": "req_418334",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "tariff-city-2024-10",
+      "type": "tariff",
+      "attributes": {
+        "name": "Населення: місто",
+        "tariff_type": "single_zone",
+        "rate": 4.32,
+        "rate_unit": "UAH/kWh",
+        "valid_from": "2024-10-01",
+        "valid_to": null,
+        "status": "current",
+        "includes_vat": true
+      }
+    },
+    {
+      "id": "tariff-city-2023-01",
+      "type": "tariff",
+      "attributes": {
+        "name": "Населення: місто",
+        "tariff_type": "single_zone",
+        "rate": 3.05,
+        "rate_unit": "UAH/kWh",
+        "valid_from": "2023-01-01",
+        "valid_to": "2024-09-30",
+        "status": "expired",
+        "includes_vat": true
+      }
+    },
+    {
+      "id": "tariff-city-2022-06",
+      "type": "tariff",
+      "attributes": {
+        "name": "Населення: місто понад 250 кВт·год",
+        "tariff_type": "tiered",
+        "rate": 1.68,
+        "rate_unit": "UAH/kWh",
+        "valid_from": "2022-06-01",
+        "valid_to": "2022-12-31",
+        "status": "expired",
+        "includes_vat": true
+      }
+    }
+  ],
+  "meta": {
+    "current_tariff": {
+      "id": "tariff-city-2024-10",
+      "rate": 4.32,
+      "name": "Населення: місто",
+      "type": "single_zone"
+    },
+    "distribution_tariff": {
+      "rate": 3.055212,
+      "valid_from": "2025-09-01",
+      "includes_vat": true
+    },
+    "multi_tariff_info": {
+      "two_zone": {
+        "night_coefficient": 0.5,
+        "night_hours": "23:00-07:00",
+        "day_coefficient": 1.0
+      },
+      "three_zone": {
+        "peak_coefficient": 1.5,
+        "peak_hours": "08:00-11:00, 20:00-22:00",
+        "semi_peak_coefficient": 1.0,
+        "semi_peak_hours": "07:00-08:00, 11:00-20:00, 22:00-23:00",
+        "night_coefficient": 0.4,
+        "night_hours": "23:00-07:00"
+      }
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/tariffs",
+    "current": "/api/v1/account/01001-00557289/tariffs/current",
+    "history_graph": "/api/v1/account/01001-00557289/tariffs/graph",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:23.184652Z",
+  "request_id": "req_880061",
+  "api_version": "v1",
+  "data": [
+    {
+      "date": "2025-12-11",
+      "time": "00:00 - 23:59",
+      "status": "operational",
+      "uptime": "100%"
+    },
+    {
+      "date": "2025-12-10",
+      "time": "00:00 - 23:59",
+      "status": "operational",
+      "uptime": "100%"
+    },
+    {
+      "date": "2025-12-09",
+      "time": "00:00 - 23:59",
+      "status": "operational",
+      "uptime": "99.8%"
+    }
+  ],
+  "meta": {
+    "current_status": "operational",
+    "current_uptime": "99.9%",
+    "last_checked": "2025-12-11T12:00:00Z"
+  }
+}

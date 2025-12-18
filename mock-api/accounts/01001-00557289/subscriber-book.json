@@ -1,0 +1,94 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:53.862791Z",
+  "request_id": "req_453609",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "2025-09",
+      "type": "ledger_entry",
+      "attributes": {
+        "year": 2025,
+        "month": 9,
+        "service_code": "electricity",
+        "service_name": "Електроенергія",
+        "volume": 472,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "accrued": 2039.04,
+        "paid": 1500.0,
+        "balance": 539.04,
+        "currency": "UAH",
+        "source": "dso",
+        "note": "Дані від оператора системи розподілу"
+      }
+    },
+    {
+      "id": "2025-10",
+      "type": "ledger_entry",
+      "attributes": {
+        "year": 2025,
+        "month": 10,
+        "service_code": "electricity",
+        "service_name": "Електроенергія",
+        "volume": 888,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "accrued": 3836.16,
+        "paid": 2500.0,
+        "balance": 1875.2,
+        "currency": "UAH",
+        "source": "dso",
+        "note": null
+      }
+    },
+    {
+      "id": "2025-11",
+      "type": "ledger_entry",
+      "attributes": {
+        "year": 2025,
+        "month": 11,
+        "service_code": "electricity",
+        "service_name": "Електроенергія",
+        "volume": 781,
+        "volume_unit": "kWh",
+        "tariff": 4.32,
+        "tariff_unit": "UAH/kWh",
+        "accrued": 3373.92,
+        "paid": 2800.0,
+        "balance": 2449.12,
+        "currency": "UAH",
+        "source": "dso",
+        "note": "Розрахунок за контрольними показаннями"
+      }
+    }
+  ],
+  "meta": {
+    "year": 2025,
+    "currency": "UAH",
+    "summary": {
+      "total_accrued": 9249.119999999999,
+      "total_paid": 6800.0,
+      "final_balance": 2449.12,
+      "balance_type": "debt"
+    },
+    "last_meter_reading": {
+      "date": "2025-12-01",
+      "value": 42130,
+      "type": "control",
+      "source": "user"
+    },
+    "filters_applied": {
+      "year": 2025
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/subscriber-book?year=2025",
+    "all_years": "/api/v1/account/01001-00557289/subscriber-book",
+    "export_pdf": "/api/v1/account/01001-00557289/subscriber-book/export?format=pdf&year=2025",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}

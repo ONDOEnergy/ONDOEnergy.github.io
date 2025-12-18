@@ -1,0 +1,368 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:23.184652Z",
+  "request_id": "req_880059",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "2025-12-INV-024",
+      "type": "invoice",
+      "attributes": {
+        "number": "202512000024",
+        "issue_date": "2025-12-21",
+        "due_date": "2026-01-10",
+        "amount": 3404.83,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "unpaid",
+        "paid_amount": 0,
+        "created_at": "2025-12-21T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-12-INV-024.pdf"
+      }
+    },
+    {
+      "id": "2025-11-INV-023",
+      "type": "invoice",
+      "attributes": {
+        "number": "202511000023",
+        "issue_date": "2025-11-21",
+        "due_date": "2025-12-11",
+        "amount": 2872.37,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "partially_paid",
+        "paid_amount": 1723.42,
+        "created_at": "2025-11-21T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-11-INV-023.pdf"
+      }
+    },
+    {
+      "id": "2025-10-INV-022",
+      "type": "invoice",
+      "attributes": {
+        "number": "202510000022",
+        "issue_date": "2025-10-22",
+        "due_date": "2025-11-11",
+        "amount": 4452.58,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 4452.58,
+        "created_at": "2025-10-22T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-10-INV-022.pdf"
+      }
+    },
+    {
+      "id": "2025-09-INV-021",
+      "type": "invoice",
+      "attributes": {
+        "number": "202509000021",
+        "issue_date": "2025-09-22",
+        "due_date": "2025-10-12",
+        "amount": 3029.33,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3029.33,
+        "created_at": "2025-09-22T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-09-INV-021.pdf"
+      }
+    },
+    {
+      "id": "2025-08-INV-020",
+      "type": "invoice",
+      "attributes": {
+        "number": "202508000020",
+        "issue_date": "2025-08-23",
+        "due_date": "2025-09-12",
+        "amount": 3608.03,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3608.03,
+        "created_at": "2025-08-23T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-08-INV-020.pdf"
+      }
+    },
+    {
+      "id": "2025-07-INV-019",
+      "type": "invoice",
+      "attributes": {
+        "number": "202507000019",
+        "issue_date": "2025-07-24",
+        "due_date": "2025-08-13",
+        "amount": 2582.06,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 2582.06,
+        "created_at": "2025-07-24T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-07-INV-019.pdf"
+      }
+    },
+    {
+      "id": "2025-06-INV-018",
+      "type": "invoice",
+      "attributes": {
+        "number": "202506000018",
+        "issue_date": "2025-06-24",
+        "due_date": "2025-07-14",
+        "amount": 3843.22,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3843.22,
+        "created_at": "2025-06-24T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-06-INV-018.pdf"
+      }
+    },
+    {
+      "id": "2025-05-INV-017",
+      "type": "invoice",
+      "attributes": {
+        "number": "202505000017",
+        "issue_date": "2025-05-25",
+        "due_date": "2025-06-14",
+        "amount": 3137.12,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3137.12,
+        "created_at": "2025-05-25T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-05-INV-017.pdf"
+      }
+    },
+    {
+      "id": "2025-04-INV-016",
+      "type": "invoice",
+      "attributes": {
+        "number": "202504000016",
+        "issue_date": "2025-04-25",
+        "due_date": "2025-05-15",
+        "amount": 3330.5,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3330.5,
+        "created_at": "2025-04-25T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-04-INV-016.pdf"
+      }
+    },
+    {
+      "id": "2025-03-INV-015",
+      "type": "invoice",
+      "attributes": {
+        "number": "202503000015",
+        "issue_date": "2025-03-26",
+        "due_date": "2025-04-15",
+        "amount": 3789.19,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 3789.19,
+        "created_at": "2025-03-26T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-03-INV-015.pdf"
+      }
+    },
+    {
+      "id": "2025-02-INV-014",
+      "type": "invoice",
+      "attributes": {
+        "number": "202502000014",
+        "issue_date": "2025-02-24",
+        "due_date": "2025-03-16",
+        "amount": 4372.61,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 4372.61,
+        "created_at": "2025-02-24T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-02-INV-014.pdf"
+      }
+    },
+    {
+      "id": "2025-01-INV-013",
+      "type": "invoice",
+      "attributes": {
+        "number": "202501000013",
+        "issue_date": "2025-01-25",
+        "due_date": "2025-02-14",
+        "amount": 4272.77,
+        "currency": "UAH",
+        "type": "main",
+        "delivery_type": "electronic",
+        "status": "paid",
+        "paid_amount": 4272.77,
+        "created_at": "2025-01-25T00:00:00Z"
+      },
+      "relationships": {
+        "account": {
+          "data": {
+            "type": "account",
+            "id": "01001-00557289"
+          }
+        }
+      },
+      "links": {
+        "download": "/api/v1/files/invoices/2025-01-INV-013.pdf"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 12,
+    "total_items": 24,
+    "total_pages": 2,
+    "has_next": true,
+    "has_prev": false,
+    "summary": {
+      "total_amount": 82332.74,
+      "paid_amount": 77778.96,
+      "unpaid_amount": 4553.78,
+      "count": 24,
+      "currency": "UAH"
+    },
+    "filters_applied": {
+      "status": null,
+      "year": null
+    },
+    "sort": {
+      "field": "issue_date",
+      "order": "desc"
+    },
+    "featured": {
+      "id": "2025-12-INV-024",
+      "amount": 3404.83,
+      "due_date": "2026-01-10",
+      "status": "unpaid"
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/invoices?page=1&per_page=12",
+    "first": "/api/v1/account/01001-00557289/invoices?page=1&per_page=12",
+    "last": "/api/v1/account/01001-00557289/invoices?page=2&per_page=12",
+    "next": "/api/v1/account/01001-00557289/invoices?page=2&per_page=12"
+  }
+}

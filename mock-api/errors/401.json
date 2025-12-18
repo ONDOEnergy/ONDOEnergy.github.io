@@ -1,0 +1,16 @@
+{
+  "status": "error",
+  "code": 401,
+  "timestamp": "2025-12-10T12:02:39.530014Z",
+  "request_id": "req_549764",
+  "api_version": "v1",
+  "error": {
+    "code": 401,
+    "message": "Authentication required",
+    "details": {
+      "message": "You must be authenticated to access this resource",
+      "auth_type": "Bearer token required",
+      "help": "Include Authorization header with valid JWT token"
+    }
+  }
+}

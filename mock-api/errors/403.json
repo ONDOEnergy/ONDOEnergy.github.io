@@ -1,0 +1,16 @@
+{
+  "status": "error",
+  "code": 403,
+  "timestamp": "2025-12-10T12:02:39.530782Z",
+  "request_id": "req_805393",
+  "api_version": "v1",
+  "error": {
+    "code": 403,
+    "message": "Access forbidden",
+    "details": {
+      "message": "You don't have permission to access this resource",
+      "required_permission": "account:read",
+      "your_role": "guest"
+    }
+  }
+}

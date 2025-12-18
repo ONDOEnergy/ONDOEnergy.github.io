@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONDO Energy - Design Transformation Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onload="console.log('jsPDF loaded:', window.jspdf)"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Before/After Slider - Clean Implementation */
+        .before-after-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            user-select: none;
+            touch-action: none;
+        }
+        
+        /* Wrapper for badges to escape overflow */
+        div[style*="position: relative"][style*="overflow: visible"] {
+            position: relative !important;
+            overflow: visible !important;
+        }
+        
+        /* Ensure badges are above everything and positioned correctly */
+        .before-after-container .badge-old,
+        .before-after-container .badge-new {
+            z-index: 10 !important;
+            transform: translateZ(0);
+        }
+        
+        .before-image {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .before-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+        }
+        
+        .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .after-image img {
+            width: 200%;
+            height: auto;
+            min-height: 100%;
+            object-fit: cover;
+            object-position: left center;
+            display: block;
+            pointer-events: none;
+        }
+        
+        /* Ensure after-image matches container height */
+        .before-after-container {
+            display: block;
+        }
+        
+        .before-after-container .after-image {
+            height: 100%;
+        }
+        
+        .before-after-container .after-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200%;
+        }
+        
+        .slider-divider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #fe8500;
+            transform: translateX(-50%);
+            z-index: 10;
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(254, 133, 0, 0.4);
+        }
+        
+        .slider-handle-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: #fe8500;
+            border: 4px solid white;
+            border-radius: 50%;
+            cursor: ew-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(254, 133, 0, 0.3), 0 0 0 4px rgba(254, 133, 0, 0.1);
+            transition: all 0.2s ease;
+            z-index: 11;
+        }
+        
+        .slider-handle-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(254, 133, 0, 0.4), 0 0 0 6px rgba(254, 133, 0, 0.15);
+        }
+        
+        .slider-handle-button:active {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        .slider-handle-icon {
+            width: 28px;
+            height: 24px;
+            fill: white;
+            pointer-events: none;
+        }
+        
+        /* Reminder Animation */
+        .drag-reminder {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 15;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: dragReminder 2s ease-in-out infinite;
+            backdrop-filter: blur(8px);
+        }
+        
+        .drag-reminder.hidden {
+            opacity: 0;
+            pointer-events: none;
+            animation: none;
+        }
+        
+        @keyframes dragReminder {
+            0%, 100% {
+                opacity: 0.8;
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+        
+        .drag-reminder-icon {
+            width: 20px;
+            height: 20px;
+            animation: dragReminderIcon 2s ease-in-out infinite;
+        }
+        
+        @keyframes dragReminderIcon {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-4px);
+            }
+            75% {
+                transform: translateX(4px);
+            }
+        }
+        
+        .badge-old {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+        
+        .badge-old::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+        
+        .badge-old:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .badge-new {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+        
+        .badge-new::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+        
+        .badge-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        @keyframes pulse-badge {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.2);
+            }
+        }
+        
+        /* Responsive Badge Styles */
+        @media (max-width: 768px) {
+            .badge-old,
+            .badge-new {
+                top: -8px;
+                padding: 8px 14px;
+                font-size: 11px;
+                border-radius: 10px;
+                gap: 6px;
+            }
+            
+            .badge-old {
+                left: 12px;
+            }
+            
+            .badge-new {
+                right: 12px;
+            }
+            
+            .badge-old::before,
+            .badge-new::before {
+                width: 5px;
+                height: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .badge-old,
+            .badge-new {
+                top: -12px;
+                padding: 6px 12px;
+                font-size: 10px;
+                letter-spacing: 0.3px;
+                border-radius: 8px;
+                gap: 5px;
+            }
+            
+            .badge-old {
+                left: 8px;
+            }
+            
+            .badge-new {
+                right: 8px;
+            }
+            
+            .badge-old::before,
+            .badge-new::before {
+                width: 4px;
+                height: 4px;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #fe8500;
+        }
+        
+        /* Hero Banner Styles */
+        .hero-banner-wrapper {
+            position: relative;
+        }
+        
+        .hero-banner-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #fe8500, #ff9500, #fe8500);
+            border-radius: 1rem;
+            opacity: 0.1;
+            z-index: -1;
+            filter: blur(20px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-banner-wrapper {
+                margin: 0 -1rem;
+                border-radius: 0;
+            }
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        
+        
+        /* PDF-specific styles */
+        @media print {
+            .slider-container {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            img {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+        
+        .pdf-optimized {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pdf-optimized">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200/80 py-3 md:py-4 px-4 md:px-6 no-print sticky top-0 z-50 backdrop-blur-md bg-white/98 shadow-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-[#fe8500] to-[#ff9500] rounded-xl flex items-center justify-center shadow-md">
+                        <span class="text-white font-bold text-lg md:text-xl">O</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight">ONDO Energy</h1>
+                        <p class="text-xs md:text-sm text-gray-600">Design Transformation</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-3">
+                    <button 
+                        onclick="exportToPDF(event)" 
+                        class="hidden sm:flex items-center gap-1.5 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-[#fe8500] hover:text-[#fe8500] transition-all"
+                        title="Export to PDF"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span>PDF</span>
+                    </button>
+                    <a 
+                        href="https://ONDOEnergy.github.io" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 bg-[#fe8500] text-white rounded-lg font-semibold text-xs md:text-sm hover:bg-[#e67600] transition-all shadow-md hover:shadow-lg transform hover:scale-105 group"
+                        title="Open live demo"
+                    >
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        <span class="font-mono hidden sm:inline">ONDOEnergy.github.io</span>
+                        <span class="font-mono sm:hidden">Live</span>
+                        <svg class="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-0.5 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-white py-8 md:py-12 px-4 md:px-6 pdf-optimized">
+        <div class="max-w-7xl mx-auto">
+            <!-- Banner Image - Hero Display -->
+            <div class="mb-12 md:mb-16 pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+                <img 
+                    src="banner.png" 
+                    alt="ONDO Energy Platform - Desktop and Mobile Design Showcase" 
+                    class="w-full h-auto object-contain pdf-optimized relative z-10"
+                    loading="eager"
+                >
+            </div>
+            
+            <!-- Call to Action - Prominent Link Under Banner -->
+            <div class="text-center mb-12 md:mb-16">
+                <a 
+                    href="https://ONDOEnergy.github.io" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-3 px-8 md:px-12 py-4 md:py-5 bg-gradient-to-r from-[#fe8500] to-[#ff9500] text-white rounded-2xl font-bold text-base md:text-xl hover:from-[#e67600] hover:to-[#ff8500] transition-all shadow-xl hover:shadow-2xl transform hover:scale-[1.02] relative overflow-hidden"
+                >
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <svg class="w-6 h-6 md:w-7 md:h-7 flex-shrink-0 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                    <div class="text-left relative z-10">
+                        <div class="text-base md:text-lg font-bold leading-tight">View Live Demo</div>
+                        <div class="text-xs md:text-sm font-mono opacity-95 mt-0.5">ONDOEnergy.github.io</div>
+                    </div>
+                    <svg class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 group-hover:translate-x-1 transition-transform relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
+                <p class="mt-4 text-sm md:text-base text-gray-600">
+                    Experience the fully functional platform with all features
+                </p>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="text-center max-w-4xl mx-auto mb-12">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
+                    Modern Energy Management Platform
+                </h2>
+                <p class="text-base md:text-lg lg:text-xl text-gray-700 mb-8 md:mb-12 leading-relaxed">
+                    A complete redesign transforming the user experience with modern UI/UX, 
+                    multi-language support, dark mode, and full mobile responsiveness.
+                </p>
+                
+                <!-- Key Features Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="feature-card bg-white border border-gray-200 p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div class="text-4xl md:text-5xl mb-3">🌍</div>
+                        <h3 class="font-semibold text-sm md:text-base mb-1.5 text-gray-900">Bilingual</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">UA & EN</p>
+                    </div>
+                    <div class="feature-card bg-white border border-gray-200 p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div class="text-4xl md:text-5xl mb-3">🌓</div>
+                        <h3 class="font-semibold text-sm md:text-base mb-1.5 text-gray-900">Dark Mode</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Light & Dark</p>
+                    </div>
+                    <div class="feature-card bg-white border border-gray-200 p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div class="text-4xl md:text-5xl mb-3">📱</div>
+                        <h3 class="font-semibold text-sm md:text-base mb-1.5 text-gray-900">Responsive</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Mobile-first</p>
+                    </div>
+                    <div class="feature-card bg-white border border-gray-200 p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div class="text-4xl md:text-5xl mb-3">✨</div>
+                        <h3 class="font-semibold text-sm md:text-base mb-1.5 text-gray-900">Modern UI</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">Beautiful UX</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Sections -->
+    <div id="comparisons" class="max-w-7xl mx-auto px-6 py-12 pdf-optimized">
+        
+        <!-- 1. Index/Home Page -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">1. Home Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    The landing page now features a modern hero section, clear value propositions, 
+                    and intuitive navigation. The new design emphasizes user engagement with 
+                    beautiful visuals and smooth animations.
+                </p>
+            </div>
+            <div style="position: relative; overflow: visible;">
+                <div class="before-after-container pdf-optimized" id="slider-index" style="page-break-inside: avoid; break-inside: avoid;">
+                    <div class="badge-old">OLD DESIGN</div>
+                    <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-index">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_index.png" alt="New Index" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-index">
+                    <img src="old_index.png" alt="Old Index" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-index">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Login Page -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">2. User Login Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Streamlined authentication experience with improved form design, 
+                    better error handling, and enhanced security indicators. 
+                    The new login page provides a welcoming first impression.
+                </p>
+            </div>
+            <div style="position: relative; overflow: visible;">
+                <div class="before-after-container pdf-optimized" id="slider-login" style="page-break-inside: avoid; break-inside: avoid;">
+                    <div class="badge-old">OLD DESIGN</div>
+                    <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-login">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_login.png" alt="New Login" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-login">
+                    <img src="old_login.png" alt="Old Login" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-login">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Registration Page -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">3. Registration Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Simplified registration process with step-by-step guidance, 
+                    real-time validation, and clear progress indicators. 
+                    The new design reduces friction and improves conversion rates.
+                </p>
+            </div>
+            <div class="before-after-container pdf-optimized" id="slider-reg" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-reg">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_reg.png" alt="New Registration" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-reg">
+                    <img src="old_reg.png" alt="Old Registration" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-reg">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Dashboard Top -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">4. Account Dashboard - Overview</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive dashboard with at-a-glance metrics, interactive charts, 
+                    and quick actions. The new design provides better data visualization 
+                    and faster access to key information.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-dash1" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-dash1">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_dash_1.png" alt="New Dashboard Top" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-dash1">
+                    <img src="old_dash_1.png" alt="Old Dashboard Top" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-dash1">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Dashboard Bottom -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">5. Account Dashboard - Details</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Enhanced data presentation with modern card layouts, 
+                    improved typography, and better information hierarchy. 
+                    Users can now quickly understand their energy consumption patterns.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-dash2" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-dash2">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_dash_2.png" alt="New Dashboard Bottom" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-dash2">
+                    <img src="old_dash_2.png" alt="Old Dashboard Bottom" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-dash2">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Payment History -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">6. Payment History Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Enhanced payment tracking with improved table design, 
+                    better filtering options, and clearer transaction details. 
+                    The new design makes financial history more transparent and easier to navigate.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-history" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-history">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_history_pay.png" alt="New Payment History" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-history">
+                    <img src="old_history_pay.png" alt="Old Payment History" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-history">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Subscriber Book -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">7. Subscriber Book Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Redesigned subscriber information display with better data organization, 
+                    improved search functionality, and clearer presentation of account details. 
+                    The new layout enhances information accessibility.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-sub" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-sub">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_sub.png" alt="New Subscriber Book" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-sub">
+                    <img src="old_sub.png" alt="Old Subscriber Book" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-sub">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Support Messages -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">8. Support Messages Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Modern messaging interface with improved conversation threading, 
+                    better message organization, and enhanced readability. 
+                    The new design makes communication with support more efficient.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-messages" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-messages">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_messages.png" alt="New Messages" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-messages">
+                    <img src="old_messages.png" alt="Old Messages" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-messages">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Settings -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">9. Settings Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive settings interface with organized sections, 
+                    intuitive controls, and clear preferences management. 
+                    The new design makes customization easier and more accessible.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-settings" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-settings">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_settings.png" alt="New Settings" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-settings">
+                    <img src="old_settings.png" alt="Old Settings" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-settings">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Account Connection -->
+        <section class="mb-20 slide-up pdf-optimized" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-900 mb-3">10. Account Connection Page</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Streamlined account linking process with step-by-step guidance, 
+                    clear instructions, and improved error handling. 
+                    The new design simplifies the account connection workflow.
+                </p>
+            </div>
+                        <div class="before-after-container pdf-optimized" id="slider-connection" style="page-break-inside: avoid; break-inside: avoid;">
+                <div class="badge-old">OLD DESIGN</div>
+                <div class="badge-new">NEW DESIGN</div>
+                <div class="drag-reminder" id="reminder-connection">
+                    <svg class="drag-reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M7 7h10v10"/>
+                    </svg>
+                    <span>Drag to compare</span>
+                </div>
+                <div class="before-image">
+                    <img src="new_connection.png" alt="New Connection" class="pdf-optimized">
+                </div>
+                <div class="after-image" id="after-connection">
+                    <img src="old_connection.png" alt="Old Connection" class="pdf-optimized">
+                </div>
+                <div class="slider-divider" id="divider-connection">
+                    <div class="slider-handle-button">
+                        <svg class="slider-handle-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.12">
+                            <path d="M37.21,15.38l0,0.17h33.53v26.54l-33.79,0l0.01,0.26v9.61c0,0.08,0,0.16-0.01,0.24c-0.09,2.07-0.77,3.54-2.06,4.39 c-1.29,0.86-2.99,0.94-5.08,0.23c-0.23-0.08-0.43-0.19-0.61-0.33C19.1,48.57,12.14,40.65,2.04,32.72L1.9,32.6 c-1.68-1.52-2.14-3.11-1.79-4.7c0.31-1.4,1.29-2.6,2.6-3.63L27.47,2.3c1.21-0.95,2.48-1.69,3.67-2.05c1.07-0.32,2.11-0.35,3.07,0 c1.05,0.38,1.88,1.15,2.42,2.39c0.38,0.89,0.59,2.03,0.59,3.46v9.05C37.22,15.24,37.22,15.31,37.21,15.38L37.21,15.38L37.21,15.38z M85.67,82.73l0-0.17H52.14V56.03l33.79,0l-0.01-0.26v-9.61c0-0.08,0-0.17,0.01-0.24c0.09-2.07,0.77-3.54,2.06-4.39 c1.29-0.86,2.99-0.94,5.08-0.23c0.23,0.08,0.43,0.19,0.61,0.33c10.1,7.92,17.06,15.85,27.15,23.78l0.14,0.12 c1.68,1.52,2.14,3.11,1.79,4.7c-0.31,1.4-1.29,2.6-2.6,3.63L95.41,95.82c-1.21,0.95-2.48,1.69-3.67,2.05 c-1.07,0.32-2.11,0.35-3.07,0c-1.05-0.38-1.88-1.15-2.42-2.39c-0.38-0.89-0.59-2.03-0.59-3.46v-9.06 C85.66,82.88,85.66,82.81,85.67,82.73L85.67,82.73L85.67,82.73z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Summary Section -->
+    <section class="bg-gray-50 py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-gray-900">Key Improvements</h2>
+            <div class="grid md:grid-cols-2 gap-6 mt-12 text-left">
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-900">
+                        <span class="text-2xl mr-3">🎨</span>
+                        Design Excellence
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>• Modern, clean interface</li>
+                        <li>• Consistent design system</li>
+                        <li>• Professional color palette</li>
+                        <li>• Improved typography</li>
+                    </ul>
+                </div>
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-900">
+                        <span class="text-2xl mr-3">🚀</span>
+                        User Experience
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>• Intuitive navigation</li>
+                        <li>• Faster task completion</li>
+                        <li>• Better information hierarchy</li>
+                        <li>• Enhanced accessibility</li>
+                    </ul>
+                </div>
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-900">
+                        <span class="text-2xl mr-3">📱</span>
+                        Mobile Experience
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>• Fully responsive design</li>
+                        <li>• Touch-optimized controls</li>
+                        <li>• Mobile-first approach</li>
+                        <li>• Seamless cross-device experience</li>
+                    </ul>
+                </div>
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-900">
+                        <span class="text-2xl mr-3">🌐</span>
+                        Internationalization
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>• Ukrainian & English support</li>
+                        <li>• Dark & light themes</li>
+                        <li>• User preference settings</li>
+                        <li>• Localized content</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 py-12 px-6 text-center no-print">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">ONDO Energy Platform</h3>
+                <p class="text-gray-600 mb-4">Design Transformation 2026</p>
+                <p class="text-sm text-gray-500 mb-6">Drag the slider to compare old and new designs</p>
+            </div>
+            <div class="pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-600 mb-2">Questions or feedback?</p>
+                <a 
+                    href="mailto:odesa@duck.com" 
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#fe8500] to-[#ff9500] text-white rounded-lg font-semibold text-sm hover:from-[#e67600] hover:to-[#ff8500] transition-all shadow-md hover:shadow-lg transform hover:scale-105 group"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>odesa@duck.com</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hidden PDF Template -->
+    <div id="pdf-template" style="position: fixed; left: 0; top: 0; width: 210mm; min-height: 297mm; background: white; padding: 20mm; font-family: 'Inter', sans-serif; visibility: hidden; opacity: 0; z-index: -1;">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, #fe8500, #ff9500); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                <span style="color: white; font-size: 28px; font-weight: bold;">O</span>
+            </div>
+            <h1 style="font-size: 36px; font-weight: 800; color: #111827; margin: 0 0 8px 0;">ONDO Energy</h1>
+            <p style="font-size: 18px; color: #6b7280; margin: 0;">Design Transformation</p>
+        </div>
+
+        <!-- Intro Text -->
+        <div style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <h2 style="font-size: 28px; font-weight: 700; color: #111827; margin-bottom: 16px;">Modern Energy Management Platform</h2>
+            <p style="font-size: 16px; color: #374151; line-height: 1.6; margin: 0;">
+                A complete redesign transforming the user experience with modern UI/UX, 
+                multi-language support, dark mode, and full mobile responsiveness.
+            </p>
+        </div>
+
+        <!-- Banner -->
+        <div style="margin-bottom: 40px; text-align: center;">
+            <img id="pdf-banner" src="banner.png" alt="ONDO Energy Platform" style="max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: block; margin: 0 auto;">
+        </div>
+
+        <!-- Features -->
+        <div style="margin-bottom: 40px;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center;">
+                <div style="padding: 20px; background: #f9fafb; border-radius: 12px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">🌍</div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 4px 0;">Bilingual</h3>
+                    <p style="font-size: 12px; color: #6b7280; margin: 0;">UA & EN</p>
+                </div>
+                <div style="padding: 20px; background: #f9fafb; border-radius: 12px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">🌓</div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 4px 0;">Dark Mode</h3>
+                    <p style="font-size: 12px; color: #6b7280; margin: 0;">Light & Dark</p>
+                </div>
+                <div style="padding: 20px; background: #f9fafb; border-radius: 12px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">📱</div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 4px 0;">Responsive</h3>
+                    <p style="font-size: 12px; color: #6b7280; margin: 0;">Mobile-first</p>
+                </div>
+                <div style="padding: 20px; background: #f9fafb; border-radius: 12px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">✨</div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 4px 0;">Modern UI</h3>
+                    <p style="font-size: 12px; color: #6b7280; margin: 0;">Beautiful UX</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Demo Link -->
+        <div style="text-align: center; margin-bottom: 50px; padding: 30px; background: linear-gradient(135deg, #fe8500, #ff9500); border-radius: 16px;">
+            <p style="font-size: 20px; font-weight: 700; color: white; margin: 0 0 8px 0;">View Live Demo</p>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.95); margin: 0; font-family: monospace;">ONDOEnergy.github.io</p>
+        </div>
+
+        <!-- Screenshot Comparisons -->
+        <div id="pdf-screenshots"></div>
+
+        <!-- Footer -->
+        <div style="margin-top: 60px; padding-top: 30px; border-top: 2px solid #e5e7eb; text-align: center;">
+            <p style="font-size: 14px; color: #6b7280; margin: 0 0 8px 0;">ONDO Energy Platform - Design Transformation 2026</p>
+            <p style="font-size: 14px; color: #111827; margin: 0;">
+                <strong>Developer:</strong> <a href="mailto:odesa@duck.com" style="color: #fe8500; text-decoration: none;">odesa@duck.com</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Before/After Slider - Clean Implementation
+        function initBeforeAfterSlider(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const afterImage = container.querySelector('.after-image');
+            const divider = container.querySelector('.slider-divider');
+            const reminder = container.querySelector('.drag-reminder');
+            
+            if (!afterImage || !divider) return;
+            
+            let isDragging = false;
+            let hasInteracted = false;
+            
+            function updateSlider(x) {
+                const rect = container.getBoundingClientRect();
+                const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+                
+                // Update after image width (new design on left, expanding rightward)
+                afterImage.style.width = percentage + '%';
+                
+                // Update divider position
+                divider.style.left = percentage + '%';
+                
+                // Hide reminder after first interaction
+                if (!hasInteracted && reminder) {
+                    hasInteracted = true;
+                    setTimeout(() => {
+                        if (reminder) reminder.classList.add('hidden');
+                    }, 300);
+                }
+            }
+            
+            // Set after-image height to match container after images load
+            function setAfterImageHeight() {
+                const beforeImg = container.querySelector('.before-image img');
+                if (beforeImg && afterImage) {
+                    const updateHeight = () => {
+                        const containerHeight = container.offsetHeight || beforeImg.offsetHeight;
+                        afterImage.style.height = containerHeight + 'px';
+                    };
+                    
+                    if (beforeImg.complete) {
+                        updateHeight();
+                    } else {
+                        beforeImg.addEventListener('load', updateHeight);
+                    }
+                    
+                    // Also update on window resize
+                    window.addEventListener('resize', updateHeight);
+                }
+            }
+            
+            setAfterImageHeight();
+            
+            function handleStart(e) {
+                isDragging = true;
+                hasInteracted = true;
+                if (reminder) reminder.classList.add('hidden');
+                e.preventDefault();
+            }
+            
+            function handleMove(e) {
+                if (!isDragging) return;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                updateSlider(clientX);
+            }
+            
+            function handleEnd() {
+                isDragging = false;
+            }
+            
+            // Mouse events
+            divider.addEventListener('mousedown', handleStart);
+            container.addEventListener('mousedown', (e) => {
+                if (e.target === container || e.target.closest('.before-image') || e.target.closest('.after-image')) {
+                    handleStart(e);
+                    updateSlider(e.clientX);
+                }
+            });
+            
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+            
+            // Touch events
+            divider.addEventListener('touchstart', handleStart, { passive: false });
+            container.addEventListener('touchstart', (e) => {
+                if (e.target === container || e.target.closest('.before-image') || e.target.closest('.after-image')) {
+                    handleStart(e);
+                    if (e.touches[0]) updateSlider(e.touches[0].clientX);
+                }
+            }, { passive: false });
+            
+            document.addEventListener('touchmove', handleMove, { passive: false });
+            document.addEventListener('touchend', handleEnd);
+            
+            // Set initial position to 50%
+            const rect = container.getBoundingClientRect();
+            updateSlider(rect.left + rect.width / 2);
+        }
+        
+        // Initialize all sliders when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderIds = [
+                'slider-index',
+                'slider-login',
+                'slider-reg',
+                'slider-dash1',
+                'slider-dash2',
+                'slider-messages',
+                'slider-sub',
+                'slider-history',
+                'slider-settings',
+                'slider-connection'
+            ];
+            
+            sliderIds.forEach(id => initBeforeAfterSlider(id));
+        });
+        
+        // PDF Export Function - Manual Page Management
+        async function exportToPDF(event) {
+            const button = event ? event.target : document.querySelector('button[onclick*="exportToPDF"]');
+            const originalText = button ? button.innerHTML : '';
+            
+            if (button) {
+                button.innerHTML = '⏳ Generating PDF...';
+                button.disabled = true;
+            }
+            
+            // Check if jsPDF is available
+            let JsPDF;
+            if (window.jspdf && window.jspdf.jsPDF) {
+                JsPDF = window.jspdf.jsPDF;
+            } else if (typeof jsPDF !== 'undefined') {
+                JsPDF = jsPDF;
+            } else {
+                alert('PDF library not loaded. Please refresh the page and try again.');
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+                return;
+            }
+            
+            // Page data
+            const pages = [
+                { num: 1, title: 'Home Page', desc: 'The landing page now features a modern hero section, clear value propositions, and intuitive navigation. The new design emphasizes user engagement with beautiful visuals and smooth animations.', oldImg: 'old_index.png', newImg: 'new_index.png' },
+                { num: 2, title: 'User Login Page', desc: 'Streamlined authentication experience with improved form design, better error handling, and enhanced security indicators. The new login page provides a welcoming first impression.', oldImg: 'old_login.png', newImg: 'new_login.png' },
+                { num: 3, title: 'Registration Page', desc: 'Simplified registration process with step-by-step guidance, real-time validation, and clear progress indicators. The new design reduces friction and improves conversion rates.', oldImg: 'old_reg.png', newImg: 'new_reg.png' },
+                { num: 4, title: 'Account Dashboard - Overview', desc: 'Comprehensive dashboard with at-a-glance metrics, interactive charts, and quick actions. The new design provides better data visualization and faster access to key information.', oldImg: 'old_dash_1.png', newImg: 'new_dash_1.png' },
+                { num: 5, title: 'Account Dashboard - Details', desc: 'Enhanced data presentation with modern card layouts, improved typography, and better information hierarchy. Users can now quickly understand their energy consumption patterns.', oldImg: 'old_dash_2.png', newImg: 'new_dash_2.png' },
+                { num: 6, title: 'Payment History Page', desc: 'Enhanced payment tracking with improved table design, better filtering options, and clearer transaction details. The new design makes financial history more transparent and easier to navigate.', oldImg: 'old_history_pay.png', newImg: 'new_history_pay.png' },
+                { num: 7, title: 'Subscriber Book Page', desc: 'Redesigned subscriber information display with better data organization, improved search functionality, and clearer presentation of account details. The new layout enhances information accessibility.', oldImg: 'old_sub.png', newImg: 'new_sub.png' },
+                { num: 8, title: 'Support Messages Page', desc: 'Modern messaging interface with improved conversation threading, better message organization, and enhanced readability. The new design makes communication with support more efficient.', oldImg: 'old_messages.png', newImg: 'new_messages.png' },
+                { num: 9, title: 'Settings Page', desc: 'Comprehensive settings interface with organized sections, intuitive controls, and clear preferences management. The new design makes customization easier and more accessible.', oldImg: 'old_settings.png', newImg: 'new_settings.png' },
+                { num: 10, title: 'Account Connection Page', desc: 'Streamlined account linking process with step-by-step guidance, clear instructions, and improved error handling. The new design simplifies the account connection workflow.', oldImg: 'old_connection.png', newImg: 'new_connection.png' }
+            ];
+            
+            try {
+                // Initialize PDF
+                const pdf = new JsPDF('p', 'mm', 'a4');
+                const pageWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const margin = 10;
+                const contentWidth = pageWidth - (margin * 2);
+                const contentHeight = pageHeight - (margin * 2);
+                let yPos = margin;
+                
+                // Helper function to add new page
+                const addNewPage = () => {
+                    pdf.addPage();
+                    yPos = margin;
+                };
+                
+                // Helper function to add text
+                const addText = (text, fontSize, isBold = false, color = [17, 24, 39], align = 'left', link = null) => {
+                    pdf.setFontSize(fontSize);
+                    pdf.setFont('helvetica', isBold ? 'bold' : 'normal');
+                    pdf.setTextColor(color[0], color[1], color[2]);
+                    const lines = pdf.splitTextToSize(text, contentWidth);
+                    const lineHeight = fontSize * 0.5;
+                    
+                    lines.forEach((line, idx) => {
+                        if (yPos + lineHeight > pageHeight - margin) {
+                            addNewPage();
+                        }
+                        const xPos = align === 'center' ? pageWidth / 2 : margin;
+                        if (link) {
+                            const textWidth = pdf.getTextWidth(line);
+                            const textX = align === 'center' ? xPos - textWidth / 2 : xPos;
+                            pdf.text(line, textX, yPos, { align: align });
+                            pdf.link(textX, yPos - fontSize * 0.35, textWidth, lineHeight, { url: link });
+                        } else {
+                            pdf.text(line, xPos, yPos, { align: align });
+                        }
+                        yPos += lineHeight;
+                    });
+                    yPos += 5;
+                };
+                
+                // Helper function to add link text
+                const addLink = (text, url, fontSize, color = [254, 133, 0]) => {
+                    pdf.setFontSize(fontSize);
+                    pdf.setTextColor(color[0], color[1], color[2]);
+                    const textWidth = pdf.getTextWidth(text);
+                    const xPos = (pageWidth - textWidth) / 2;
+                    pdf.text(text, pageWidth / 2, yPos, { align: 'center' });
+                    pdf.link(xPos, yPos - fontSize * 0.35, textWidth, fontSize * 0.5, { url: url });
+                    yPos += fontSize * 0.6 + 5;
+                };
+                
+                // Helper function to add email link
+                const addEmail = (email, fontSize, color = [254, 133, 0]) => {
+                    pdf.setFontSize(fontSize);
+                    pdf.setTextColor(color[0], color[1], color[2]);
+                    const textWidth = pdf.getTextWidth(email);
+                    const xPos = (pageWidth - textWidth) / 2;
+                    pdf.text(email, pageWidth / 2, yPos, { align: 'center' });
+                    pdf.link(xPos, yPos - fontSize * 0.35, textWidth, fontSize * 0.5, { url: 'mailto:' + email });
+                    yPos += fontSize * 0.6 + 5;
+                };
+                
+                // Cover page with better styling
+                pdf.setFillColor(254, 133, 0);
+                pdf.circle(pageWidth / 2, 50, 18, 'F');
+                pdf.setTextColor(255, 255, 255);
+                pdf.setFontSize(28);
+                pdf.setFont('helvetica', 'bold');
+                pdf.text('O', pageWidth / 2, 57, { align: 'center' });
+                
+                yPos = 85;
+                addText('ONDO Energy', 36, true, [17, 24, 39], 'center');
+                addText('Design Transformation', 20, false, [107, 114, 128], 'center');
+                yPos += 15;
+                addText('Modern Energy Management Platform', 22, true, [17, 24, 39], 'center');
+                yPos += 5;
+                addText('A complete redesign transforming the user experience with modern UI/UX, multi-language support, dark mode, and full mobile responsiveness.', 14, false, [55, 65, 81], 'center');
+                
+                // Add banner image
+                const bannerImg = new Image();
+                bannerImg.crossOrigin = 'anonymous';
+                await new Promise((resolve) => {
+                    bannerImg.onload = () => {
+                        const imgAspectRatio = bannerImg.width / bannerImg.height;
+                        let imgWidth = contentWidth;
+                        let imgHeight = imgWidth / imgAspectRatio;
+                        const maxBannerHeight = 80;
+                        if (imgHeight > maxBannerHeight) {
+                            imgHeight = maxBannerHeight;
+                            imgWidth = imgHeight * imgAspectRatio;
+                        }
+                        const imgX = (pageWidth - imgWidth) / 2;
+                        pdf.addImage(bannerImg, 'JPEG', imgX, yPos, imgWidth, imgHeight, undefined, 'FAST');
+                        yPos += imgHeight + 15;
+                        resolve();
+                    };
+                    bannerImg.onerror = () => resolve();
+                    bannerImg.src = 'banner.png';
+                });
+                
+                // Features with better styling
+                addText('Key Features', 20, true, [17, 24, 39], 'center');
+                yPos += 8;
+                
+                const features = [
+                    { icon: 'Bilingual', text: 'Bilingual (UA & EN)' },
+                    { icon: 'Dark Mode', text: 'Dark Mode (Light & Dark)' },
+                    { icon: 'Responsive', text: 'Responsive (Mobile-first)' },
+                    { icon: 'Modern UI', text: 'Modern UI (Beautiful UX)' }
+                ];
+                
+                features.forEach(feature => {
+                    pdf.setFontSize(12);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setTextColor(17, 24, 39);
+                    const fullText = feature.icon + ': ' + feature.text;
+                    pdf.text(fullText, pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 11;
+                });
+                
+                yPos += 10;
+                
+                // Add live demo link
+                pdf.setFontSize(14);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(254, 133, 0);
+                addLink('View Live Demo: ondoenergy.github.io', 'https://ondoenergy.github.io', 14, [254, 133, 0]);
+                
+                yPos += 5;
+                
+                // Add email on cover page
+                pdf.setFontSize(12);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setTextColor(107, 114, 128);
+                pdf.text('Contact:', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 8;
+                addEmail('odesa@duck.com', 12, [254, 133, 0]);
+                
+                // Add each comparison page
+                for (let i = 0; i < pages.length; i++) {
+                    const page = pages[i];
+                    addNewPage();
+                    
+                    // Reset yPos to top with minimal margin
+                    yPos = margin;
+                    
+                    // Page title and description
+                    addText(`${page.num}. ${page.title}`, 20, true, [17, 24, 39], 'center');
+                    yPos += 3;
+                    addText(page.desc, 12, false, [107, 114, 128], 'center');
+                    yPos += 8;
+                    
+                    // Calculate available space for both images
+                    const textHeight = yPos - margin;
+                    const availableHeight = contentHeight - textHeight;
+                    const imageSpacing = 5;
+                    const maxImageHeight = (availableHeight - imageSpacing) / 2;
+                    
+                    // Add OLD design image - resize to fit
+                    const oldImg = new Image();
+                    oldImg.crossOrigin = 'anonymous';
+                    await new Promise((resolve) => {
+                        oldImg.onload = () => {
+                            const imgAspectRatio = oldImg.width / oldImg.height;
+                            let imgWidth = contentWidth;
+                            let imgHeight = imgWidth / imgAspectRatio;
+                            
+                            if (imgHeight > maxImageHeight) {
+                                imgHeight = maxImageHeight;
+                                imgWidth = imgHeight * imgAspectRatio;
+                            }
+                            
+                            const imgX = (pageWidth - imgWidth) / 2;
+                            pdf.addImage(oldImg, 'JPEG', imgX, yPos, imgWidth, imgHeight, undefined, 'FAST');
+                            yPos += imgHeight + imageSpacing;
+                            resolve();
+                        };
+                        oldImg.onerror = () => resolve();
+                        oldImg.src = page.oldImg;
+                    });
+                    
+                    // Add NEW design image - resize to fit
+                    const newImg = new Image();
+                    newImg.crossOrigin = 'anonymous';
+                    await new Promise((resolve) => {
+                        newImg.onload = () => {
+                            const imgAspectRatio = newImg.width / newImg.height;
+                            let imgWidth = contentWidth;
+                            let imgHeight = imgWidth / imgAspectRatio;
+                            
+                            if (imgHeight > maxImageHeight) {
+                                imgHeight = maxImageHeight;
+                                imgWidth = imgHeight * imgAspectRatio;
+                            }
+                            
+                            const imgX = (pageWidth - imgWidth) / 2;
+                            pdf.addImage(newImg, 'JPEG', imgX, yPos, imgWidth, imgHeight, undefined, 'FAST');
+                            yPos += imgHeight;
+                            resolve();
+                        };
+                        newImg.onerror = () => resolve();
+                        newImg.src = page.newImg;
+                    });
+                }
+                
+                // Footer page with better styling
+                addNewPage();
+                yPos = pageHeight / 2 - 40;
+                
+                // Add decorative line
+                pdf.setDrawColor(229, 231, 235);
+                pdf.setLineWidth(0.5);
+                pdf.line(margin, yPos - 10, pageWidth - margin, yPos - 10);
+                
+                addText('ONDO Energy Platform', 18, true, [17, 24, 39], 'center');
+                addText('Design Transformation 2026', 14, false, [107, 114, 128], 'center');
+                yPos += 15;
+                
+                // Add live demo link
+                addLink('Live Demo: ondoenergy.github.io', 'https://ondoenergy.github.io', 12, [254, 133, 0]);
+                
+                yPos += 5;
+                
+                // Add developer email
+                pdf.setFontSize(12);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setTextColor(107, 114, 128);
+                pdf.text('Developer:', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 8;
+                addEmail('odesa@duck.com', 12, [254, 133, 0]);
+                
+                // Save PDF
+                pdf.save('ONDO_Energy_Design_Transformation.pdf');
+                
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+                alert('PDF generation failed: ' + (error.message || 'Unknown error'));
+            }
+        }
+        
+        // Smooth scroll for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

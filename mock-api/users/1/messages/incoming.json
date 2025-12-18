@@ -1,0 +1,70 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:02:51.411688Z",
+  "request_id": "req_112411",
+  "api_version": "v1",
+  "data": [
+    {
+      "type": "message",
+      "id": "1",
+      "attributes": {
+        "subject": "Ласкаво просимо до ONDO Online",
+        "body": "Ласкаво просимо до вашого нового особистого кабінету. Тут ви можете керувати своїм рахунком за електроенергію, сплачувати рахунки та відстежувати споживання.",
+        "from": "Підтримка ONDO",
+        "to": "Користувач",
+        "date": "2025-12-01T09:00:00Z",
+        "read": false,
+        "type": "incoming"
+      }
+    },
+    {
+      "type": "message",
+      "id": "2",
+      "attributes": {
+        "subject": "Рахунок за листопад 2025",
+        "body": "Ваш рахунок за листопад 2025 року було згенеровано. Загальна сума: 1,250.00 грн. Будь ласка, сплатіть до 20 грудня.",
+        "from": "Система нарахувань",
+        "to": "Користувач",
+        "date": "2025-12-05T10:30:00Z",
+        "read": true,
+        "type": "incoming"
+      }
+    },
+    {
+      "type": "message",
+      "id": "3",
+      "attributes": {
+        "subject": "Заплановане технічне обслуговування",
+        "body": "Ми будемо проводити заплановане технічне обслуговування наших серверів 15 грудня з 02:00 до 04:00. Сервіс може бути недоступним під час цього періоду.",
+        "from": "Системний адміністратор",
+        "to": "Користувач",
+        "date": "2025-12-10T14:15:00Z",
+        "read": false,
+        "type": "incoming"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 20,
+      "total_items": 3,
+      "total_pages": 1,
+      "has_next": false,
+      "has_prev": false
+    },
+    "folder": "inbox",
+    "unread_count": 2,
+    "filters_applied": {
+      "read_status": null,
+      "date_from": null
+    }
+  },
+  "links": {
+    "self": "/api/v1/user/1/messages/incoming",
+    "outgoing": "/api/v1/user/1/messages/outgoing",
+    "compose": "/api/v1/user/1/messages",
+    "user": "/api/v1/user/1"
+  }
+}

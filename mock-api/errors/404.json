@@ -1,0 +1,16 @@
+{
+  "status": "error",
+  "code": 404,
+  "timestamp": "2025-12-10T12:02:39.524224Z",
+  "request_id": "req_841418",
+  "api_version": "v1",
+  "error": {
+    "code": 404,
+    "message": "Resource not found",
+    "details": {
+      "resource_type": "account",
+      "resource_id": "99999-99999999",
+      "message": "The requested account does not exist or you don't have access to it"
+    }
+  }
+}

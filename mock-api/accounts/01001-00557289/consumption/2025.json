@@ -1,0 +1,169 @@
+{
+  "status": "success",
+  "code": 200,
+  "timestamp": "2025-12-10T12:01:39.199843Z",
+  "request_id": "req_672408",
+  "api_version": "v1",
+  "data": [
+    {
+      "id": "2025-01",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 1,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-01-01",
+        "period_end": "2025-01-31"
+      }
+    },
+    {
+      "id": "2025-02",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 2,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-02-01",
+        "period_end": "2025-02-28"
+      }
+    },
+    {
+      "id": "2025-03",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 3,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-03-01",
+        "period_end": "2025-03-31"
+      }
+    },
+    {
+      "id": "2025-04",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 4,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-04-01",
+        "period_end": "2025-04-30"
+      }
+    },
+    {
+      "id": "2025-05",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 5,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-05-01",
+        "period_end": "2025-05-31"
+      }
+    },
+    {
+      "id": "2025-06",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 6,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-06-01",
+        "period_end": "2025-06-30"
+      }
+    },
+    {
+      "id": "2025-07",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 7,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-07-01",
+        "period_end": "2025-07-31"
+      }
+    },
+    {
+      "id": "2025-08",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 8,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-08-01",
+        "period_end": "2025-08-31"
+      }
+    },
+    {
+      "id": "2025-09",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 9,
+        "value": 472,
+        "unit": "kWh",
+        "period_start": "2025-09-01",
+        "period_end": "2025-09-30"
+      }
+    },
+    {
+      "id": "2025-10",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 10,
+        "value": 888,
+        "unit": "kWh",
+        "period_start": "2025-10-01",
+        "period_end": "2025-10-31"
+      }
+    },
+    {
+      "id": "2025-11",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 11,
+        "value": 781,
+        "unit": "kWh",
+        "period_start": "2025-11-01",
+        "period_end": "2025-11-30"
+      }
+    },
+    {
+      "id": "2025-12",
+      "type": "consumption",
+      "attributes": {
+        "year": 2025,
+        "month": 12,
+        "value": 0,
+        "unit": "kWh",
+        "period_start": "2025-12-01",
+        "period_end": "2025-12-31"
+      }
+    }
+  ],
+  "meta": {
+    "year": 2025,
+    "unit": "kWh",
+    "summary": {
+      "total": 2141,
+      "average_monthly": 178.42,
+      "max_month": 10,
+      "min_month": 9
+    }
+  },
+  "links": {
+    "self": "/api/v1/account/01001-00557289/consumption/2025",
+    "years": "/api/v1/account/01001-00557289/consumption/years",
+    "prev_year": "/api/v1/account/01001-00557289/consumption/2024",
+    "account": "/api/v1/account/01001-00557289"
+  }
+}
